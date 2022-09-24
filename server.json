@@ -1,0 +1,20 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Desenvolvimento de site",
+      "type": "income",
+      "category": "Venda",
+      "price": "140000",
+      "createdAt": "2022-09-24T21:43:22.922Z"
+    },
+    {
+      "id": 2,
+      "description": "Japonês",
+      "type": "outcome",
+      "category": "Alimentação",
+      "price": "300",
+      "createdAt": "2022-09-24T21:43:11.922Z"
+    }
+  ]
+}
