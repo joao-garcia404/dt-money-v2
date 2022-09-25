@@ -1,3 +1,5 @@
+import { useTransactions } from "../../hooks/useTransactions";
+
 import * as Dialog from "@radix-ui/react-dialog";
 
 import { Controller, useForm } from "react-hook-form";
@@ -25,19 +27,29 @@ const newTransactionSchema = z.object({
 type NewTransactionFormInputs = z.infer<typeof newTransactionSchema>;
 
 export function NewTransactionModal() {
+  const { createTransaction } = useTransactions();
+
   const {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(newTransactionSchema),
   });
 
   async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const { category, description, price, type } = data;
 
-    console.log(data);
+    await createTransaction({
+      category,
+      description,
+      price,
+      type,
+    });
+
+    reset();
   }
 
   return (

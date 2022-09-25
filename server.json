@@ -23,6 +23,22 @@
       "category": "Educação",
       "price": 1980,
       "createdAt": "2022-09-24T19:43:11.922Z"
+    },
+    {
+      "description": "Teste create",
+      "price": 1234,
+      "type": "outcome",
+      "category": "Testes",
+      "createdAt": "2022-09-25T14:28:53.601Z",
+      "id": 4
+    },
+    {
+      "description": "Teste desaclopamento",
+      "price": 12,
+      "type": "income",
+      "category": "Testes",
+      "createdAt": "2022-09-25T14:40:45.291Z",
+      "id": 5
     }
   ]
 }

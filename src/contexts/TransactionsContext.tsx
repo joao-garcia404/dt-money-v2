@@ -11,9 +11,17 @@ interface Transaction {
   createdAt: string;
 }
 
+interface CreateTransactionData {
+  description: string;
+  type: "income" | "outcome";
+  price: number;
+  category: string;
+}
+
 export interface TransactionsContextType {
   transactions: Transaction[];
   fetchTransactions: (query?: string) => Promise<void>;
+  createTransaction: (data: CreateTransactionData) => Promise<void>;
 }
 
 interface TransactionsProviderProps {
@@ -27,9 +35,33 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   async function fetchTransactions(query?: string) {
     try {
-      const response = await api.get("/transactions", { params: { q: query } });
+      const response = await api.get("/transactions", {
+        params: {
+          q: query,
+          _sort: "createdAt",
+          _order: "desc",
+        },
+      });
 
       setTransactions(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function createTransaction(data: CreateTransactionData) {
+    try {
+      const { description, price, type, category } = data;
+
+      const response = await api.post("/transactions", {
+        description,
+        price,
+        type,
+        category,
+        createdAt: new Date().toISOString(),
+      });
+
+      setTransactions((prevState) => [response.data, ...prevState]);
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +72,9 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   }, []);
 
   return (
-    <TransactionsContext.Provider value={{ transactions, fetchTransactions }}>
+    <TransactionsContext.Provider
+      value={{ transactions, fetchTransactions, createTransaction }}
+    >
       {children}
     </TransactionsContext.Provider>
   );
