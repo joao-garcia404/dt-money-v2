@@ -1,26 +1,26 @@
-import { useTransactions } from "./useTransactions";
+import { useTransactions } from './useTransactions'
 
 export function useSummary() {
-  const { transactions } = useTransactions();
+  const { transactions } = useTransactions()
 
   const summary = transactions.reduce(
     (acc, transaction) => {
-      if (transaction.type === "income") {
-        acc.incomes += transaction.price;
-        acc.total += transaction.price;
+      if (transaction.type === 'income') {
+        acc.incomes += transaction.price
+        acc.total += transaction.price
       } else {
-        acc.outcomes += transaction.price;
-        acc.total -= transaction.price;
+        acc.outcomes += transaction.price
+        acc.total -= transaction.price
       }
 
-      return acc;
+      return acc
     },
     {
       incomes: 0,
       outcomes: 0,
       total: 0,
-    }
-  );
+    },
+  )
 
-  return summary;
+  return summary
 }
