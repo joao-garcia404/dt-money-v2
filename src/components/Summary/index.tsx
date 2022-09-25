@@ -1,5 +1,5 @@
 import { useTheme } from "styled-components";
-import { useTransactions } from "../../hooks/useTransactions";
+import { useSummary } from "../../hooks/useSummary";
 
 import { priceFormatter } from "../../utils/formatter";
 
@@ -10,26 +10,7 @@ import { SummaryCard, SummaryContainer } from "./styles";
 export function Summary() {
   const theme = useTheme();
 
-  const { transactions } = useTransactions();
-
-  const summary = transactions.reduce(
-    (acc, transaction) => {
-      if (transaction.type === "income") {
-        acc.incomes += transaction.price;
-        acc.total += transaction.price;
-      } else {
-        acc.outcomes += transaction.price;
-        acc.total -= transaction.price;
-      }
-
-      return acc;
-    },
-    {
-      incomes: 0,
-      outcomes: 0,
-      total: 0,
-    }
-  );
+  const { incomes, outcomes, total } = useSummary();
 
   return (
     <SummaryContainer>
@@ -40,7 +21,7 @@ export function Summary() {
           <ArrowCircleUp size={32} color={theme["green-300"]} />
         </header>
 
-        <strong>{priceFormatter.format(summary.incomes)}</strong>
+        <strong>{priceFormatter.format(incomes)}</strong>
       </SummaryCard>
 
       <SummaryCard>
@@ -50,7 +31,7 @@ export function Summary() {
           <ArrowCircleDown size={32} color={theme["red-300"]} />
         </header>
 
-        <strong>{priceFormatter.format(summary.outcomes)}</strong>
+        <strong>{priceFormatter.format(outcomes)}</strong>
       </SummaryCard>
 
       <SummaryCard variant="green">
@@ -60,7 +41,7 @@ export function Summary() {
           <CurrencyDollar size={32} color={theme.white} />
         </header>
 
-        <strong>{priceFormatter.format(summary.total)}</strong>
+        <strong>{priceFormatter.format(total)}</strong>
       </SummaryCard>
     </SummaryContainer>
   );
