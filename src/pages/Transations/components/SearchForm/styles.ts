@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SearchFormContainer = styled.div`
+export const SearchFormContainer = styled.form`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -33,7 +33,12 @@ export const SearchFormContainer = styled.div`
 
     cursor: pointer;
 
-    &:hover {
+    &: disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
       background: ${({ theme }) => theme["green-500"]};
       border-color: ${({ theme }) => theme["green-500"]};
       color: ${({ theme }) => theme.white};
